@@ -1,0 +1,32 @@
+ja:
+  enums:
+    order:
+      payment:
+        cash_on_delivery: "代金引換"
+        bank_transfer: "銀行振込"
+        credit_payment: "クレジットカード"
+  column:
+    product_number: 商品番号
+    product_name: 商品名
+    unit_price: 単価
+    description: 概要説明
+    image: イメージ
+    check: 選択
+    discount_rate: 割引率
+    quantity: 数量
+    total_amount: 合計金額
+  title:
+    ordering: 注文登録
+    choose_products: 注文商品の選択
+    product_search: 商品検索
+    home: ホーム
+    my_page: マイページ
+    log_in: ログイン
+    log_out: ログアウト
+    sign_up: 新規登録
+    category: カテゴリ
+    customer_ranking: 顧客評価ランク
+  button:
+    order: 注文する
+    go_order: 注文へ進む
+    search: 検索

@@ -1,0 +1,38 @@
+<h1><%= t("title.choose_products") %></h1>
+
+<%= form_with(scope: nil, local: true, url: cart_index_path, method: :post) do |form|%>
+  <table>
+    <thead>
+      <tr>
+        <th><%= t("column.product_number") %></th>
+        <th><%= t("column.product_name") %></th>
+        <th><%= t("column.unit_price") %></th>
+        <th><%= t("column.image") %></th>
+        <th><%= t("column.description") %></th>
+        <th><%= t("column.check") %></th>
+        <th><%= t("column.quantity") %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @product.each_with_index do |product, idx| %>
+        <tr>
+          <td><%= product.number %></td>
+          <td><%= product.name %></td>
+          <td  class="right_shift"><%= number_with_delimiter product.unit_price.round %></td>
+          <% if product.image.present? %>%
+            <td><%= image_tag product.image.url %></td>
+          <% else %>
+            <td><%= image_tag "default_product.png" %></td>
+          <% end %>
+          <td><%= product.description %></td>
+          <td><%= check_box_tag "cart_item[#{idx}][product]", product.id %>
+          <td><%= number_field_tag "cart_item[#{idx}][quantity]", 1, class: "small_field" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= form.submit t("button.go_order") %>
+  <div>
+  <%= link_to "ログアウト", sign_out_path, method: :delete %>
+  </div>
+<% end %>
