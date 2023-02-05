@@ -2,10 +2,13 @@ Rails.application.routes.draw do
   # get 'cart/index'
   # get 'cart/create'
   resources :cart
-  resources :orders, only: [:index, :create, :destroy, :show] do     #⇒（従来のnewアクションを削除）
-    get :cart, on: :collection        #⇒（getメソッドに基づく、cartアクションのルートを追加）
-    put :new, on: :collection         #⇒（PUTメソッドに基づく、newアクションのルートを追加）
-  end
+  post 'cart/create', to: 'cart#create', as: 'cart_create'
+  resources :orders
+  post 'orders/:id' => 'orders#show'
+  # , only: [:index, :create, :destroy, :show] do     #⇒（従来のnewアクションを削除）
+  #   get :cart, on: :collection        #⇒（getメソッドに基づく、cartアクションのルートを追加）
+  #   put :new, on: :collection         #⇒（PUTメソッドに基づく、newアクションのルートを追加）
+  # end
   resources :products
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

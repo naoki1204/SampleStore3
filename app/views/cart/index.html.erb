@@ -1,6 +1,6 @@
 <h1><%= t("title.choose_products") %></h1>
 
-<%= form_with(scope: nil, local: true, url: cart_index_path, method: :post) do |form|%>
+<%= form_with url: cart_create_path, method: :post do |form|%>
   <table>
     <thead>
       <tr>
@@ -25,8 +25,8 @@
             <td><%= image_tag "default_product.png" %></td>
           <% end %>
           <td><%= product.description %></td>
-          <td><%= check_box_tag "cart_item[#{idx}][product]", product.id %>
-          <td><%= number_field_tag "cart_item[#{idx}][quantity]", 1, class: "small_field" %></td>
+          <td><%= form.check_box :product_id, {}, product.id ,nil %></td>
+          <td><%= form.text_field :quantity %></td>
         </tr>
       <% end %>
     </tbody>

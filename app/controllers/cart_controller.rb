@@ -3,14 +3,18 @@ before_action :authenticate_user!
 
   def index
     @product =Product.all
+    # @cart_item = CartItem.new
   end
 
   def create
+    # binding.pry
     @cart_item = CartItem.new(cart_item_params)
     binding.pry
+    @cart_item.user_id = current_user.id
     if @cart_item.save
+      redirect_to new_order_path
     else
-    redirect_to :action => 'index'
+      redirect_to :action => 'index'
     end
 
   end
@@ -23,6 +27,6 @@ before_action :authenticate_user!
 
     # Only allow a list of trusted parameters through.
   def cart_item_params
-    params.require(:cart_item).permit(:product_id, :quantity)
+    params.permit(:product_id,:quantity)
   end
 end
