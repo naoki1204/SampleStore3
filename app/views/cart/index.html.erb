@@ -1,6 +1,6 @@
 <h1><%= t("title.choose_products") %></h1>
 
-<%= form_with(scope: nil, local: true, url: cart_index_path, method: :post) do |form|%>
+<%= form_tag('cart',method: :post) do %>
   <table>
     <thead>
       <tr>
@@ -25,13 +25,13 @@
             <td><%= image_tag "default_product.png" %></td>
           <% end %>
           <td><%= product.description %></td>
-          <td><%= check_box_tag "cart_item[#{idx}][product]", product.id %>
-          <td><%= number_field_tag "cart_item[#{idx}][quantity]", 1, class: "small_field" %></td>
+          <td><%= check_box_tag "params[#{idx}][product_id]", product.id ,checked=false %></td>
+          <td><%= number_field_tag "params[#{idx}][quantity]",min:1,max:10 %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
-  <%= form.submit t("button.go_order") %>
+  <%= submit_tag("注文") %>
   <div>
   <%= link_to "ログアウト", sign_out_path, method: :delete %>
   </div>

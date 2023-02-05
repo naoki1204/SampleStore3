@@ -1,0 +1,28 @@
+ja:
+  activerecord:
+    models:
+      order: 注文
+    attributes:
+      order:
+        occured_at: 注文日
+        payment: 支払方法
+        payment_stat: 支払い状況
+
+    models:
+      product: 商品
+    attributes:
+      product:
+        number: 商品番号
+        name: 商品名
+        unit_price: 単価
+        image: 画像
+        description: 説明
+        category_id: 種類
+        quantity: 数量
+
+    models:
+      address: 住所
+    attributes:
+      address:
+        address_name: 名前
+        address: 住所

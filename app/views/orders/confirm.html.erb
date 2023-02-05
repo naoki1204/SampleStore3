@@ -1,0 +1,71 @@
+<div "container">
+    <div class='row mb-3'>
+        <div class='col-8 offset-1'>
+          <h4 class="pt-3">注文情報確認</h4>
+        </div>
+    </div>
+    <div class='row'>
+        <div class='col-7 offset-1'>
+          <table class='table table-bordered border-dark'>
+            <tr class="table-secondary">
+                <th>商品名</th>
+                <th>単価(税込)</th>
+                <th>数量</th>
+                <th>小計</th>
+            </tr>
+            <!--合計金額totalの初期化-->
+            <% total = 0 %>
+            <% @cart_items.each do |cart_item| %>
+              <tr>
+                  <td><%= cart_item.product.name %></td>
+                  <td><%= (cart_item.product.unit_price*1.08).to_i %></td>
+                  <td><%= cart_item.quantity %></td>
+                  <td>
+                      <!--小計の計算-->
+                      <% subtotal = ((cart_item.product.unit_price*cart_item.quantity)*1.08).to_i %>
+                      <!--小計を表示-->
+                      <%= subtotal %>
+                  </td>
+              </tr>
+              <!--アイテムごとに合計金額に加算する-->
+              <% total += (cart_item.product.unit_price*cart_item.quantity)*1.08 %>
+            <% end %>
+          </table>
+        </div>
+        <div class='col-3'>
+            <table class="table table-bordered border-dark">
+                <% @order.postage = 800 %>
+                <tr><th class="table-secondary">送料</th><td><%= @order.postage %></td></tr>
+                <tr><th class="table-secondary">商品合計</th><td><%= total.to_i %></td></tr>
+                <% @order.total_price = @order.postage + total.to_i %>
+                <tr><th class="table-secondary">請求金額</th><td><%= @order.total_price %></td></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class='col-11 offset-1'>
+            <table class="table table-borderless">
+                <tr><th class="col-1">支払い方法</th><td class="col-10"><%= @order.payment_method %></td></tr>
+                <tr><th class="col-1">お届け先</th><td class="col-10">
+                <%= @order.order_address %>
+                <%= @order.order_name %>
+                </td></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <%= form_with model: @order, url: orders_path, method: :post, local: true do |f| %>
+                            <%= render 'error_messages', object: f.object %>
+            <%= f.hidden_field :user_id %>
+            <%= f.hidden_field :postage %>
+            <%= f.hidden_field :total_price %>
+            <%= f.hidden_field :payment_method %>
+            <%= f.hidden_field :order_name %>
+            <%= f.hidden_field :order_address %>
+            <%= f.hidden_field :status %>
+            <%= f.submit "注文を確定する", class: "btn btn-success" %>
+        <% end %>
+    </div>
+</div>
