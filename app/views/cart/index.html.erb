@@ -26,7 +26,7 @@
           <% end %>
           <td><%= product.description %></td>
           <td><%= form.check_box :product_id, {}, product.id ,nil %></td>
-          <td><%= form.text_field :quantity %></td>
+          <td><%= form.number_field :quantity %></td>
         </tr>
       <% end %>
     </tbody>
