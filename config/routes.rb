@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   # get 'cart/index'
   # get 'cart/create'
   resources :cart
-  post 'cart/create', to: 'cart#create', as: 'cart_create'
+  # post 'cart/create', to: 'cart#create', as: 'cart_create'
   resources :orders
   post 'orders/:id' => 'orders#show'
   # , only: [:index, :create, :destroy, :show] do     #⇒（従来のnewアクションを削除）
