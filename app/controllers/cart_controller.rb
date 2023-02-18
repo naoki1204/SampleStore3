@@ -3,7 +3,7 @@ before_action :authenticate_user!
 
   def index
     @product =Product.all
-    # @cart_item = CartItem.new
+    @cart_item = CartItem.new
   end
 
   def create
@@ -27,6 +27,6 @@ before_action :authenticate_user!
 
     # Only allow a list of trusted parameters through.
   def cart_item_params
-    params.permit(:product_id,params[:quantity])
+    params.permit(:product_id,:quantity)
   end
 end

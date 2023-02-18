@@ -1,6 +1,6 @@
 <h1><%= t("title.choose_products") %></h1>
 
-<%= form_tag('cart', method: :post)  do %>
+<%= form_tag('cart',method: :post) do %>
   <table>
     <thead>
       <tr>
@@ -26,7 +26,7 @@
           <% end %>
           <td><%= product.description %></td>
           <td><%= check_box_tag :product_id, product.id ,checked=false %></td>
-          <td><%= number_field_tag :quantity,params[:quantity] %></td>
+          <td><%= number_field_tag :quantity,product.unit_price,min:1,max:10 %></td>
         </tr>
       <% end %>
     </tbody>
