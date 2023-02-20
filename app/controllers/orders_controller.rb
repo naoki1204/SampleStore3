@@ -65,13 +65,16 @@ end
       @address.user_id = current_user.id
       @address.address_name = @order.order_name
       @address.address = @order.order_address
+      binding.pry
 
       if @address.save # 確定前(確認画面)で save してしまうことになりますが、私の知識の限界でした
       else
+        binding.pry
         render :new
 # ここに渡ってくるデータはユーザーで新規追加してもらうので、入力不足の場合は new に戻します
       end
     else
+      binding.pry
       render :new # ありえないですが、万が一当てはまらないデータが渡ってきた場合の処理です
     end
     @cart_items = current_user.cart_items.all # カートアイテムの情報をユーザーに確認してもらうために使用します
