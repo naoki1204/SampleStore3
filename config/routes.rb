@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   resources :cart
   # post 'cart/create', to: 'cart#create', as: 'cart_create'
   resources :orders
-  post 'orders/:id' => 'orders#show'
+  post "orders/confirm", to: "orders#confirm", as: "confirm"
   # , only: [:index, :create, :destroy, :show] do     #⇒（従来のnewアクションを削除）
   #   get :cart, on: :collection        #⇒（getメソッドに基づく、cartアクションのルートを追加）
   #   put :new, on: :collection         #⇒（PUTメソッドに基づく、newアクションのルートを追加）
@@ -13,10 +13,10 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
-    devise_for :users, :controllers => {
-    :registrations => 'users/registrations',
-    :sessions => 'users/sessions'
-  }
+  devise_for :users, :controllers => {
+                       :registrations => "users/registrations",
+                       :sessions => "users/sessions",
+                     }
 
   devise_scope :user do
     get "user/:id", :to => "users/registrations#detail"
