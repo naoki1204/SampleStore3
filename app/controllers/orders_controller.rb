@@ -17,13 +17,11 @@ class OrdersController < ApplicationController
 
     # 現在memberに登録されている住所であれば
     if params[:order][:address_option] == "0"
-      binding.pry
-      @order.order_address = current_user.address
-      @order.order_name = current_user.name
-
+      @addresses = current_user.addresses
+      @order.order_address = @addresses[0].address
+      @order.order_name = @addresses[0].address_name
       # collection.selectであれば
     elsif params[:order][:address_option] == "1"
-      binding.pry
       ship = Address.find(params[:order][:user_id])
       @order.order_address = ship.address
       @order.order_name = ship.address_name
@@ -45,20 +43,19 @@ class OrdersController < ApplicationController
     @order = Order.new(order_params)
     @order.user_id = current_user.id
     @order.save
-
     # ordered_itmemの保存
     current_user.cart_items.each do |cart_item| #カートの商品を1つずつ取り出しループ
-      @order_item = OrdereItem.new #初期化宣言
-      @order_item.product_id = cart.product_id
+      @order_item = OrderItem.new #初期化宣言
+      @order_item.product_id = cart_item.product_id
       @order_item.order_id = @order.id
-      @order_item.order_quantity = cart.quantity
+      @order_item.order_quantity = cart_item.quantity
       # 購入が完了したらカート情報は削除するのでこちらに保存します
-      @order_item.order_price = (cart.product.unit_price * 1.08).floor
+      @order_item.order_price = (cart_item.product.unit_price * 1.08).floor
       @order_item.save #注文商品を保存
     end #ループ終わり
 
-    current_member.cart_items.destroy_all #カートの中身を削除
-    redirect_to thanx_orders_path
+    current_user.cart_items.destroy_all #カートの中身を削除
+    redirect_to cart_index_path
   end
 
   def destroy
@@ -70,6 +67,6 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(:postage, :payment_method, :name, :address, :user_id, :total_price, :status)
+    params.require(:order).permit(:postage, :payment_method, :order_name, :order_address, :user_id, :total_price, :status)
   end
 end

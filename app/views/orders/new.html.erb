@@ -1,3 +1,12 @@
+<% if @order.errors.any? %>
+  <div id="error_explanation" class="alert alert-danger">
+    <ul>
+      <% @order.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
 <div class="container">
     <div class="row py-2">
         <div class="col-10 offset-2">
@@ -6,7 +15,7 @@
     </div>
     <div class="row">
         <div class="col">
-            <%= form_with model: @order, url: 'confirm', method: :post, local: true do |f| %>
+            <%= form_with model: @order, url: 'confirm', method: :get, local: true do |f| %>
                 <h5 class="font-weight-bold">支払い方法</h5>
                 <p>
                 <%= f.radio_button :payment_method,:クレジットカード,  checked: "checked" %>
@@ -20,7 +29,7 @@
                     <%= f.radio_button :address_option, 0, checked: "checked" %>
                     <%= f.label :order_address, "ご自身の住所" %>
                 <br>
-                    <%= current_user.address %><br>
+                    <%= current_user.address %>
                     <%= current_user.name %>
                 <br>
                     <%= f.radio_button :address_option, 1 %>
