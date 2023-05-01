@@ -2,6 +2,8 @@ class Product < ApplicationRecord
   belongs_to :category
   has_many :cart_item
   has_many :order, through: :order_item
+  validates :name, presence: true
+  validates :number, presence: true
 
   def taxin_price
     unit_price * 1.1
