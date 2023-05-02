@@ -19,3 +19,10 @@ ja:
         description: 説明
         category_id: 種類
         quantity: 数量
+
+    models:
+      address: 住所
+    attributes:
+      address:
+        address_name: 名前
+        address: 住所
