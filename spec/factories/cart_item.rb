@@ -3,6 +3,6 @@ FactoryBot.define do
     #モデルアソシエーション
     association :user
     association :product
-    quantity { Faker::Number.number(5) }
+    quantity { 100000 }
   end
 end

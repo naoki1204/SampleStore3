@@ -3,7 +3,7 @@ FactoryBot.define do
     #モデルアソシエーション
     association :product
     association :order
-    order_quantity { Faker::Number.number(5) }
-    order_price { Faker::Number.number(5) }
+    order_quantity { 1 }
+    order_price { 100000 }
   end
 end

@@ -4,6 +4,9 @@ FactoryBot.define do
     association :user
     order_name { Faker::Commerce.product_name }
     order_address { Faker::Internet.email }
-    total_price { Faker::Number.number(9) }
+    total_price { 100000 }
+    postage { 100000 }
+    status { 1 }
+    payment_method { 1 }
   end
 end
