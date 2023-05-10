@@ -12,9 +12,27 @@ RSpec.describe Order, type: :request do
     expect(response).to have_http_status(200)
   end
 
-  # it "GET Orders confirm" do
-  #   binding.pry
-  #   get confirm_path(order)
-  #   expect(response).to have_http_status(200)
-  # end
+  describe 'order#confirm' do
+
+    context 'パラメーターが妥当な場合' do
+      let(:params) {{order: attributes_for(:order)} }
+
+      it 'リクエストが成功する' do
+        get confirm_path, params: params
+        expect(response).to have_http_status(200)
+      end
+    end
+  end
+
+  describe 'order#create' do
+
+    context 'パラメーターが妥当な場合' do
+      let(:params) {{order: attributes_for(:order)} }
+
+      it 'リクエストが成功する' do
+        post "/orders", params: params
+        expect(response).to redirect_to cart_index_path
+      end
+    end
+  end
 end
