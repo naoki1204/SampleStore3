@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import { BrowserRouter, Link } from "react-router-dom";
 import PropTypes from "prop-types"
 class Address extends React.Component {
   //コンストラクタ。
@@ -106,11 +107,14 @@ AddressList.propTypes = {
 //上と同様関数コンポーネント。
 const AddressItem = (props) => {
   //受け取ったタスクのオブジェクトの値を、それぞれ行のセルに挿入。
-  const { address_name, address } = props.address
+  const { address_name, address, id } = props.address
   return (
     <tr>
       <td>{address_name}</td>
       <td>{address}</td>
+      <BrowserRouter>
+        <td><Link to={`/addresses/${id}`}>詳細</Link></td>
+      </BrowserRouter>
     </tr >
   )
 }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { BrowserRouter, Link } from "react-router-dom";
 import PropTypes from "prop-types"
 class Product extends React.Component {
   //コンストラクタ。
@@ -106,7 +107,7 @@ ProductList.propTypes = {
 //上と同様関数コンポーネント。
 const ProductItem = (props) => {
   //受け取ったタスクのオブジェクトの値を、それぞれ行のセルに挿入。
-  const { number, name, unit_price, image, description, quantity, category_id } = props.product
+  const { number, name, unit_price, image, description, quantity, category_id, id } = props.product
   return (
     <tr>
       <td>{number}</td>
@@ -116,6 +117,11 @@ const ProductItem = (props) => {
       <td>{description}</td>
       <td>{quantity}</td>
       <td>{category_id}</td>
+      <BrowserRouter>
+        <td><Link to={`/products/${id}`}>詳細</Link></td>
+      </BrowserRouter>
+
+
     </tr >
   )
 }
