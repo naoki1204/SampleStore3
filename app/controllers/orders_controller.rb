@@ -2,9 +2,10 @@ class OrdersController < ApplicationController
   def cart
   end
 
+  PER=5
   def new
     @order = Order.new
-    @addresses = current_user.addresses.all
+    @addresses = current_user.addresses.page(params[:page]).per(PER)
     # render "confirm"
   end
 
@@ -16,22 +17,20 @@ class OrdersController < ApplicationController
     # ご自身の住所と配送先住所が選択された場合はhiddenで処理
 
     # 現在memberに登録されている住所であれば
-    if params[:order][:address_option] == "0"
+  case params[:order][:address_option]
+    when "0"
       @addresses = current_user.addresses
       @order.order_address = @addresses[0].address
       @order.order_name = @addresses[0].address_name
-      # collection.selectであれば
-    elsif params[:order][:address_option] == "1"
+    # For collection.select
+    when "1"
       ship = Address.find(params[:order][:user_id])
       @order.order_address = ship.address
       @order.order_name = ship.address_name
-
-      # 新規住所入力であれば
-    elsif params[:order][:address_option] = "2"
+    # For a new address input
+    else
       @order.order_address = params[:order][:order_address]
       @order.order_name = params[:order][:order_name]
-    else
-      render "new"
     end
 
     @cart_items = current_user.cart_items.all
