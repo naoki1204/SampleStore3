@@ -11,7 +11,7 @@ gem "sprockets-rails"
 gem "rails-i18n"
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.1"
-
+gem "kaminari"
 gem "pry-rails"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"
@@ -56,6 +56,7 @@ gem "pry-nav"
 group :development, :test do
   gem "rspec-rails", "~> 4.0.0" #Rails 5.xでRspecを使用する場合、このようにバージョン指定する。
   gem "capybara"
+  gem "webdrivers"
   gem "factory_bot_rails"
   gem "faker"
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

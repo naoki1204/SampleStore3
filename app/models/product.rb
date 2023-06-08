@@ -4,9 +4,9 @@ class Product < ApplicationRecord
   has_many :order, through: :order_item
   validates :name, presence: true
   validates :number, presence: true
-
+  TAX = 0.1
   def taxin_price
-    unit_price * 1.1
+    unit_price *(1 + TAX)
   end
 
   enum status: {
