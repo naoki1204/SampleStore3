@@ -1,11 +1,11 @@
 require "rails_helper"
 
 RSpec.describe Address, type: :system do
-  before(:each) do
+  before do
     sign_in create(:user)
     @address = create(:address) #ここで定義
   end
-  context '住所の登録' do
+  describe '住所の登録' do
     before do
       visit new_address_path
       fill_in "名前", with: "大阪"
@@ -18,7 +18,7 @@ RSpec.describe Address, type: :system do
     end
   end
 
-  context "住所の更新" do
+  describe "住所の更新" do
     before do
       visit edit_address_path(@address)
       fill_in "名前", with: "兵庫"
@@ -29,7 +29,7 @@ RSpec.describe Address, type: :system do
       expect(page).to have_content '兵庫'
     end
   end
-  context "住所の削除" do
+  describe "住所の削除" do
     before do
       visit address_path(@address)
       click_button "Destroy this address"
