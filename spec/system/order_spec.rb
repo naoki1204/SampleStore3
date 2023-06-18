@@ -10,7 +10,7 @@ before do
 
 end
   describe '注文情報入力のテスト' do
-    it '注文情報入力' do
+    before '注文情報入力' do
       visit new_order_path
 
       choose "order_payment_method_クレジットカード"
@@ -18,6 +18,9 @@ end
       fill_in "住所", with: "奈良県奈良市"
       fill_in "宛名", with: "佐藤"
       click_button "確認画面へ進む"
+    end
+    it "入力した情報が表示される" do
+      expect(page).to have_content "奈良県奈良市"
     end
 
   end
