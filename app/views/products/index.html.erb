@@ -2,7 +2,12 @@
 
 <%= react_component("Product", { products: @products }) %>
 
-<%= link_to "新規追加", new_product_path %>
+<div>
+  <%= link_to "新規追加", new_product_path %>
+</div>
+<div>
+  <%= link_to "CSV出力",products_path(format: :csv) %>
+</div>
 <div>
   <%= link_to "ログアウト", sign_out_path, method: :delete %>
 </div>
