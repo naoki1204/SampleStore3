@@ -1,3 +1,4 @@
+require 'csv'
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[ show edit update destroy ]
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
@@ -5,6 +6,13 @@ class ProductsController < ApplicationController
   PER =20
   def index
     @products = Product.page(params[:page]).per(PER)
+
+    respond_to do |format|
+      format.html
+      format.csv do |csv|
+        send_users_csv(@products)
+      end
+    end
   end
 
   def show
@@ -64,6 +72,18 @@ class ProductsController < ApplicationController
 
   def record_not_found
   redirect_to products_path
+  end
+
+  def send_users_csv(products)
+    csv_data = CSV.generate(row_sep: "\r\n", encoding:Encoding::CP932)  do |csv|
+      header = %w(番号 名前 単価 備考 種類)
+      csv << header
+      products.each do |product|
+        values = [product.number,product.name,product.unit_price,product.description,product.category_id]
+        csv << values
+      end
+    end
+    send_data(csv_data, filename: "products.csv")
   end
 
 end

@@ -1,9 +1,17 @@
+require 'csv'
 class AddressesController < ApplicationController
   before_action :set_address, only: %i[ show edit update destroy ]
 
   PER = 10
   def index
     @addresses = Address.page(params[:page]).per(PER)
+
+    respond_to do |format|
+      format.html
+      format.csv do |csv|
+        send_addresses_csv(@addresses)
+      end
+    end
   end
 
   def show
@@ -61,4 +69,17 @@ class AddressesController < ApplicationController
   def address_params
     params.require(:address).permit(:address_name, :address)
   end
+
+  def send_addresses_csv(addresses)
+    csv_data = CSV.generate(row_sep: "\r\n", encoding:Encoding::CP932)  do |csv|
+      header = %w(番号 名前 住所)
+      csv << header
+      addresses.each do |address|
+        values = [address.id,address.address_name,address.address,]
+        csv << values
+      end
+    end
+    send_data(csv_data, filename: "addresses.csv")
+  end
+
 end
