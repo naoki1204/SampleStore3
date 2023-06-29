@@ -12,6 +12,17 @@ class ProductsController < ApplicationController
       format.csv do |csv|
         send_users_csv(@products)
       end
+
+      format.pdf do
+
+        # pdfを新規作成。インスタンスを渡す。
+        pdf = RecordPdf.new(@products)
+
+        send_data pdf.render,
+          filename:    "product.pdf",
+          type:        "application/pdf",
+          disposition: "inline" # 画面に表示。外すとダウンロードされる。
+      end
     end
   end
 
