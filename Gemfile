@@ -19,10 +19,10 @@ gem "prawn"
 gem "prawn-table"
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
-
+gem "sidekiq"
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem "turbo-rails"
-
+gem "redis", "~> 4.7", ">= 4.7.1"
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem "stimulus-rails"
 

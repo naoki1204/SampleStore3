@@ -1,3 +1,4 @@
+require "sidekiq/web"
 Rails.application.routes.draw do
   resources :addresses
   get "address/index"
@@ -12,6 +13,7 @@ Rails.application.routes.draw do
   # post 'cart/create', to: 'cart#create', as: 'cart_create'
   get "orders/confirm", to: "orders#confirm", as: "confirm"
   resources :orders
+  mount Sidekiq::Web => "/sidekiq"
   # resources :orders, only => [:new, :confirm, :create, :destroy, :index, :cart]
 
   # , only: [:index, :create, :destroy, :show] do     #⇒（従来のnewアクションを削除）
