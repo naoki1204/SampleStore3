@@ -1,8 +1,8 @@
-  version: 2.1
-
-  jobs:
-    deploy-job:
-      steps:
-        - add_ssh_keys:
-            fingerprints:
-              - "dc:79:8d:37:b5:91:42:5f:f1:74:f1:01:2f:ba:cb:ab"
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: circleci/node:4.8.2
+    steps:
+      - checkout
+      - run: echo "hello world"
