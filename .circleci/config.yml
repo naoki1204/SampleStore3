@@ -1,8 +1,61 @@
-  version: 2.1
+version: 2.1
+orbs:
+  ruby: circleci/ruby@0.1.2
 
-  jobs:
-    deploy-job:
-      steps:
-        - add_ssh_keys:
-            fingerprints:
-              - "dc:79:8d:37:b5:91:42:5f:f1:74:f1:01:2f:ba:cb:ab"
+jobs:
+  build:
+    docker:
+      - image: circleci/ruby:2.7.2-node-browsers-legacy
+        environment:
+          - BUNDLER_VERSION: 2.1.4
+          - RAILS_ENV: 'test'
+          - DB_HOST: 127.0.0.1
+      - image: circleci/postgres:13.2  # PostgreSQL のバージョンを指定
+        environment:
+          - POSTGRES_USER: root
+          - POSTGRES_DB: SampleStore2_test  # testのDB名指定
+          - POSTGRES_PASSWORD: ''  # パスワードが空であることを指定
+
+    working_directory: ~/repo
+    steps:
+      - checkout
+
+      - run:
+          name: wait for database
+          command: dockerize -wait tcp://127.0.0.1:5432 -timeout 5m
+
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "Gemfile.lock" }}
+            - v1-dependencies-
+
+      - run:
+          name: Install dependencies
+          command: |
+            gem install bundler -v 2.1.4
+            bundle install --path=vendor/bundle --jobs 4 --retry 3
+
+      - save_cache:
+          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+
+      - run:
+          name: Database Setup
+          command: |
+            # PostgreSQLの場合は rake db:create ではなく rails db:create を使用
+            bundle exec rails db:create
+            bundle exec rails db:schema:load
+
+      - run:
+          name: Rubocop
+          command: bundle exec rubocop
+
+      - run:
+          name: Run rspec
+          command: |
+            bundle exec rspec --profile 10 \
+                              --format RspecJunitFormatter \
+                              --out test_results/rspec.xml \
+                              --format progress \
+                              $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
