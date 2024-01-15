@@ -24,6 +24,10 @@
     <%= product.description %>
   </p>
 
+    <strong>Quantity:</strong>
+    <%= number_with_precision(product.quantity,precision: 0,strip_insignificant_zeros: true) %>
+  </p>
+
   <p>
     <strong>Category:</strong>
     <%= product.category_id %>

@@ -12,6 +12,7 @@ ja:
     description: 概要説明
     image: イメージ
     check: 選択
+    quantity: 可能数量
     discount_rate: 割引率
     quantity: 数量
     total_amount: 合計金額

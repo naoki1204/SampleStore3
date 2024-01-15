@@ -1,9 +1,0 @@
-ja:
-  models:
-    order: 注文
-  activerecord:
-    attributes:
-      order:
-        occured_at: 注文日
-        payment: 支払方法
-        payment_stat: 支払い状況
