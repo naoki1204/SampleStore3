@@ -55,6 +55,7 @@ gem "pry-nav"
 
 group :development, :test do
   gem "rspec-rails", "~> 4.0.0" #Rails 5.xでRspecを使用する場合、このようにバージョン指定する。
+  gem "rubocop"
   gem "capybara"
   gem "webdrivers"
   gem "factory_bot_rails"
